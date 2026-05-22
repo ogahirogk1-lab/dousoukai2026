@@ -238,10 +238,37 @@
     font-weight: 600;
     transition: all 0.2s;
   }
-  .btn-attend { background: rgba(39,174,96,0.1); border-color: var(--green); color: #1A7A40; }
-  .btn-attend.selected, .btn-attend:hover { background: rgba(39,174,96,0.25); }
-  .btn-absent { background: rgba(192,57,43,0.1); border-color: var(--accent); color: #8B1A10; }
-  .btn-absent.selected, .btn-absent:hover { background: rgba(192,57,43,0.25); }
+  .btn-attend {
+    background: #F0FAF4;
+    border: 2px solid var(--green);
+    color: #1A7A40;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .btn-attend:hover { background: #D6F5E3; transform: translateY(-1px); }
+  .btn-attend.selected {
+    background: var(--green);
+    color: white;
+    border-color: var(--green);
+    box-shadow: 0 4px 14px rgba(39,174,96,0.45);
+    transform: translateY(-2px);
+    font-size: 15px;
+  }
+  .btn-absent {
+    background: #FDF2F2;
+    border: 2px solid var(--accent);
+    color: #8B1A10;
+    transition: all 0.2s;
+  }
+  .btn-absent:hover { background: #FAD9D9; transform: translateY(-1px); }
+  .btn-absent.selected {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+    box-shadow: 0 4px 14px rgba(192,57,43,0.45);
+    transform: translateY(-2px);
+    font-size: 15px;
+  }
 
   .btn-submit {
     width: 100%;
@@ -629,8 +656,12 @@
 
   function selectRsvp(type) {
     rsvpSelection = type;
-    document.getElementById('btn-attend').classList.toggle('selected', type === 'attend');
-    document.getElementById('btn-absent').classList.toggle('selected', type === 'absent');
+    const attendBtn = document.getElementById('btn-attend');
+    const absentBtn = document.getElementById('btn-absent');
+    attendBtn.classList.toggle('selected', type === 'attend');
+    absentBtn.classList.toggle('selected', type === 'absent');
+    attendBtn.textContent = type === 'attend' ? '✅ 参加する ◀ 選択中' : '✅ 参加する';
+    absentBtn.textContent = type === 'absent' ? '❌ 不参加 ◀ 選択中' : '❌ 不参加';
   }
 
   // ---- RSVP ----
@@ -700,6 +731,8 @@
     rsvpSelection = null;
     document.getElementById('btn-attend').classList.remove('selected');
     document.getElementById('btn-absent').classList.remove('selected');
+    document.getElementById('btn-attend').textContent = '✅ 参加する';
+    document.getElementById('btn-absent').textContent = '❌ 不参加';
     showToast('回答を送信しました！ありがとうございます 🎉');
     setTimeout(loadRsvp, 1000);
   }
