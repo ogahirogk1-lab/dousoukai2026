@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>長浦卒業生 45歳同窓会</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #B8860B;
+    --gold-light: #DAA520;
+    --bg: #FFFFFF;
+    --bg2: #F5F5F5;
+    --bg3: #EEEEEE;
+    --surface: rgba(245,245,245,0.95);
+    --surface2: rgba(240,240,240,0.8);
+    --border: rgba(0,0,0,0.12);
+    --text: #1A1A1A;
+    --text-mid: #3A3A3A;
+    --text-light: #888888;
+    --accent: #C0392B;
+    --green: #27AE60;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(160deg, #FDF6E3 0%, #F5E6C8 50%, #EDD9A3 100%);
+    padding: 60px 20px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(ellipse at 60% 40%, rgba(255,255,255,0.3) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-label {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(22px, 6vw, 36px);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.4;
+    margin-bottom: 8px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+  .hero-subtitle {
+    font-size: 13px;
+    color: var(--text-mid);
+    letter-spacing: 2px;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+  .divider {
+    width: 60px; height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 0 auto 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.7s forwards;
+  }
+
+  /* INFO CARDS */
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    max-width: 480px;
+    margin: 0 auto;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+  .info-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 12px;
+    text-align: center;
+    backdrop-filter: blur(4px);
+  }
+  .info-card.full { grid-column: 1 / -1; }
+  .info-icon { font-size: 20px; margin-bottom: 6px; }
+  .info-label { font-size: 10px; color: var(--gold); letter-spacing: 1px; margin-bottom: 4px; }
+  .info-value { font-size: 13px; color: var(--text); font-weight: 600; line-height: 1.5; }
+
+  .deadline-badge {
+    display: inline-block;
+    background: rgba(192,57,43,0.12);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 4px;
+    margin-top: 8px;
+  }
+
+  /* LINE JOIN */
+  .line-join-wrap {
+    margin: 20px auto 0;
+    max-width: 320px;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.1s forwards;
+  }
+  .line-join-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 14px 20px;
+    background: #06C755;
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    transition: opacity 0.2s;
+    box-shadow: 0 4px 12px rgba(6,199,85,0.3);
+  }
+  .line-join-btn:hover { opacity: 0.85; }
+  .line-status {
+    font-size: 11px;
+    color: var(--text-light);
+    margin-top: 8px;
+    text-align: center;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky;
+    top: 0; z-index: 100;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    flex: 0 0 auto;
+    padding: 14px 16px;
+    font-size: 12px;
+    color: var(--text-light);
+    background: none;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: 'Noto Sans JP', sans-serif;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+  /* SECTIONS */
+  .section { display: none; padding: 24px 16px; max-width: 520px; margin: 0 auto; }
+  .section.active { display: block; }
+
+  .section-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 18px;
+    color: var(--text);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--gold);
+  }
+
+  /* RSVP */
+  .rsvp-status {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .rsvp-count {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 8px;
+    text-align: center;
+  }
+  .rsvp-count .num { font-size: 28px; font-weight: 700; color: var(--gold); }
+  .rsvp-count .lbl { font-size: 11px; color: var(--text-light); margin-top: 4px; }
+  .rsvp-count.attend .num { color: var(--green); }
+  .rsvp-count.absent .num { color: var(--accent); }
+
+  .form-group { margin-bottom: 16px; }
+  .form-label { font-size: 12px; color: var(--text-mid); font-weight: 600; margin-bottom: 6px; display: block; }
+  .form-input {
+    width: 100%;
+    padding: 12px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 14px;
+    font-family: 'Noto Sans JP', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus { border-color: var(--gold); background: white; }
+  .form-input::placeholder { color: var(--text-light); }
+
+  .name-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+
+  .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+  .btn {
+    padding: 14px;
+    border-radius: 8px;
+    border: 1px solid;
+    font-size: 14px;
+    font-family: 'Noto Sans JP', sans-serif;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .btn-attend { background: rgba(39,174,96,0.1); border-color: var(--green); color: #1A7A40; }
+  .btn-attend.selected, .btn-attend:hover { background: rgba(39,174,96,0.25); }
+  .btn-absent { background: rgba(192,57,43,0.1); border-color: var(--accent); color: #8B1A10; }
+  .btn-absent.selected, .btn-absent:hover { background: rgba(192,57,43,0.25); }
+
+  .btn-submit {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Noto Sans JP', sans-serif;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: opacity 0.2s;
+    box-shadow: 0 4px 12px rgba(184,134,11,0.3);
+  }
+  .btn-submit:hover { opacity: 0.85; }
+  .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* ATTENDEE LIST */
+  .attendee-list { margin-top: 20px; }
+  .attendee-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 8px;
+  }
+  .attendee-name { font-size: 14px; font-weight: 600; color: var(--text); }
+  .attendee-sub { font-size: 11px; color: var(--text-light); margin-top: 3px; }
+  .badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 600; white-space: nowrap; }
+  .badge-attend { background: rgba(39,174,96,0.15); color: #1A7A40; border: 1px solid var(--green); }
+  .badge-absent { background: rgba(192,57,43,0.15); color: #8B1A10; border: 1px solid var(--accent); }
+
+  /* PAYMENT */
+  .payment-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .payment-title { font-size: 14px; color: var(--text); font-weight: 700; margin-bottom: 12px; }
+  .payment-detail { font-size: 13px; color: var(--text-mid); line-height: 2; }
+  .paypay-btn {
+    display: block;
+    text-align: center;
+    padding: 14px;
+    background: #E61B19;
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 15px;
+    margin-top: 10px;
+    letter-spacing: 1px;
+  }
+  .fee-breakdown {
+    background: rgba(184,134,11,0.08);
+    border-left: 3px solid var(--gold);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  /* CHAT */
+  .chat-messages {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    min-height: 200px;
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 12px;
+  }
+  .chat-msg { margin-bottom: 14px; animation: fadeUp 0.3s forwards; }
+  .chat-msg-header { display: flex; gap: 8px; align-items: baseline; margin-bottom: 4px; }
+  .chat-msg-name { font-size: 12px; color: var(--gold); font-weight: 700; }
+  .chat-msg-time { font-size: 10px; color: var(--text-light); }
+  .chat-msg-body { font-size: 13px; color: var(--text-mid); line-height: 1.6; }
+
+  .chat-input-row { display: flex; gap: 8px; }
+  .chat-input {
+    flex: 1;
+    padding: 11px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 13px;
+    font-family: 'Noto Sans JP', sans-serif;
+    outline: none;
+  }
+  .chat-input:focus { border-color: var(--gold); background: white; }
+  .chat-send {
+    padding: 11px 16px;
+    background: var(--gold);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 13px;
+    transition: opacity 0.2s;
+  }
+  .chat-send:hover { opacity: 0.8; }
+
+  /* NOTICE */
+  .notice-badge {
+    display: inline-block;
+    font-size: 10px;
+    background: var(--accent);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .notice-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .notice-date { font-size: 11px; color: var(--text-light); margin-bottom: 6px; }
+  .notice-title { font-size: 14px; color: var(--text); font-weight: 700; margin-bottom: 6px; }
+  .notice-body { font-size: 13px; color: var(--text-mid); line-height: 1.7; }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 30px; left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--gold);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    opacity: 0;
+    transition: all 0.3s;
+    z-index: 999;
+    white-space: nowrap;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  .loading-dot { display: inline-block; animation: blink 1s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <img src="visual.png" alt="長浦卒業生45歳同窓会" style="width:100%;max-width:480px;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.15);margin-bottom:20px;display:block;margin-left:auto;margin-right:auto;">
+
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-icon">📅</div>
+      <div class="info-label">開催日時</div>
+      <div class="info-value">2026年8月11日<br>12:00 〜 18:00</div>
+    </div>
+    <div class="info-card">
+      <div class="info-icon">💰</div>
+      <div class="info-label">会費（予定）</div>
+      <div class="info-value">7,000円</div>
+    </div>
+    <div class="info-card full">
+      <div class="info-icon">🏛️</div>
+      <div class="info-label">会場</div>
+      <div class="info-value">ラスペランザ（JR姉ヶ崎駅）<br><small style="font-size:11px;color:var(--text-light)">〒299-0111 市原市姉崎東 2-6-9</small></div>
+    </div>
+  </div>
+  <div class="deadline-badge">⚠️ 参加締切：2026年7月10日（金）</div>
+
+  <div class="line-join-wrap">
+    <a class="line-join-btn" href="https://line.me/ti/g2/rOx1qEeRbONB0eOBkDlNlNPQleU5JOO-PTPY4g?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" target="_blank">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.477 2 2 6.065 2 11.12c0 3.386 1.89 6.362 4.757 8.138l-.59 2.205a.4.4 0 00.574.453l2.56-1.422A11.3 11.3 0 0012 20.24c5.523 0 10-4.065 10-9.12C22 6.065 17.523 2 12 2z"/></svg>
+      LINEグループに参加する
+    </a>
+    <div class="line-status">タップしてオープンチャットに参加できます</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <button class="nav-btn active" onclick="showSection('rsvp', this)">📋 出欠確認</button>
+  <button class="nav-btn" onclick="showSection('notice', this)">📢 お知らせ</button>
+  <button class="nav-btn" onclick="showSection('payment', this)">💳 会費支払</button>
+  <button class="nav-btn" onclick="showSection('chat-all', this)">💬 みんなで話す</button>
+  <button class="nav-btn" onclick="showSection('chat-kanji', this)">🎯 幹事に相談</button>
+</nav>
+
+<!-- RSVP -->
+<section id="rsvp" class="section active">
+  <div class="section-title">📋 出欠確認</div>
+
+  <div class="rsvp-status">
+    <div class="rsvp-count attend">
+      <div class="num" id="attend-count">-</div>
+      <div class="lbl">参加</div>
+    </div>
+    <div class="rsvp-count absent">
+      <div class="num" id="absent-count">-</div>
+      <div class="lbl">不参加</div>
+    </div>
+    <div class="rsvp-count">
+      <div class="num" id="total-count">-</div>
+      <div class="lbl">回答済</div>
+    </div>
+  </div>
+
+  <div class="name-row">
+    <div>
+      <label class="form-label">お名前（現在）</label>
+      <input class="form-input" id="rsvp-name" type="text" placeholder="山田 太郎">
+    </div>
+    <div>
+      <label class="form-label">旧姓（任意）</label>
+      <input class="form-input" id="rsvp-oldname" type="text" placeholder="鈴木">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">電話番号</label>
+    <input class="form-input" id="rsvp-tel" type="tel" placeholder="090-0000-0000">
+  </div>
+  <div class="form-group">
+    <label class="form-label">LINE ID（任意）</label>
+    <input class="form-input" id="rsvp-lineid" type="text" placeholder="例：taro_yamada">
+  </div>
+  <div class="form-group">
+    <label class="form-label">メッセージ（任意）</label>
+    <input class="form-input" id="rsvp-msg" type="text" placeholder="楽しみにしています！">
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-attend" id="btn-attend" onclick="selectRsvp('attend')">✅ 参加する</button>
+    <button class="btn btn-absent" id="btn-absent" onclick="selectRsvp('absent')">❌ 不参加</button>
+  </div>
+  <button class="btn-submit" id="rsvp-submit" onclick="submitRsvp()">回答を送信する</button>
+
+  <div class="attendee-list" id="attendee-list">
+    <div style="font-size:12px;color:var(--text-light);margin-bottom:12px;">読み込み中<span class="loading-dot">...</span></div>
+  </div>
+</section>
+
+<!-- NOTICE -->
+<section id="notice" class="section">
+  <div class="section-title">📢 お知らせ <span class="notice-badge">NEW</span></div>
+  <div id="notice-list">
+    <div class="notice-item">
+      <div class="notice-date">2026年5月22日</div>
+      <div class="notice-title">🎉 同窓会開催のお知らせ</div>
+      <div class="notice-body">10年ぶりの再会！長浦卒業生45歳同窓会を開催します。懐かしい仲間と久しぶりに集まりましょう。参加締切は7月10日（金）です。友達にもシェアしてください！</div>
+    </div>
+    <div class="notice-item">
+      <div class="notice-date">2026年5月22日</div>
+      <div class="notice-title">💰 会費について</div>
+      <div class="notice-body">会費は7,000円（予定）です。支払い方法はPayPay・当日現金の2種類から選べます。</div>
+    </div>
+  </div>
+  <div style="margin-top:24px;">
+    <div class="section-title" style="font-size:14px;">幹事からのお知らせを追加</div>
+    <div class="form-group">
+      <label class="form-label">タイトル</label>
+      <input class="form-input" id="notice-title-input" placeholder="例：会場アクセスについて">
+    </div>
+    <div class="form-group">
+      <label class="form-label">内容</label>
+      <textarea class="form-input" id="notice-body-input" rows="3" placeholder="お知らせ内容を入力..."></textarea>
+    </div>
+    <button class="btn-submit" onclick="addNotice()">お知らせを投稿する</button>
+  </div>
+</section>
+
+<!-- PAYMENT -->
+<section id="payment" class="section">
+  <div class="section-title">💳 会費支払い方法</div>
+  <div class="fee-breakdown">会費（予定）7,000円</div>
+  <div class="payment-card">
+    <div class="payment-title">📱 PayPay で支払う</div>
+    <div class="payment-detail">以下のボタンからPayPayで幹事の小川に送金できます。</div>
+    <a class="paypay-btn" href="https://qr.paypay.ne.jp/p2p01_UPFgCZEcTwxAQQgB" target="_blank">PayPayで送金する →</a>
+  </div>
+  <div class="payment-card">
+    <div class="payment-title">💵 当日現金払い</div>
+    <div class="payment-detail">
+      当日受付でお支払いいただけます。<br>
+      ※できるだけ事前払いにご協力ください。
+    </div>
+  </div>
+</section>
+
+<!-- CHAT ALL -->
+<section id="chat-all" class="section">
+  <div class="section-title">💬 みんなで話す</div>
+  <div class="chat-messages" id="chat-all-messages">
+    <div style="font-size:12px;color:var(--text-light);">読み込み中<span class="loading-dot">...</span></div>
+  </div>
+  <div class="chat-input-row">
+    <input class="chat-input" id="chat-all-name" placeholder="名前" style="max-width:90px;">
+    <input class="chat-input" id="chat-all-input" placeholder="メッセージを入力...">
+    <button class="chat-send" onclick="sendChat('all')">送信</button>
+  </div>
+</section>
+
+<!-- CHAT KANJI -->
+<section id="chat-kanji" class="section">
+  <div class="section-title">🎯 幹事に相談</div>
+  <div style="font-size:12px;color:var(--text-light);margin-bottom:12px;">幹事：小川博吉（ガチョン） ／進藤梓／山本絵美／児玉光代</div>
+  <div class="chat-messages" id="chat-kanji-messages">
+    <div style="font-size:12px;color:var(--text-light);">読み込み中<span class="loading-dot">...</span></div>
+  </div>
+  <div class="chat-input-row">
+    <input class="chat-input" id="chat-kanji-name" placeholder="名前" style="max-width:90px;">
+    <input class="chat-input" id="chat-kanji-input" placeholder="幹事への質問・相談...">
+    <button class="chat-send" onclick="sendChat('kanji')">送信</button>
+  </div>
+</section>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // ======================================================
+  // ★ Apps Script デプロイ後にここのURLを書き換えてください
+  // ======================================================
+  const GAS_URL = 'https://script.google.com/macros/s/AKfycbwhgm0CprNypxeDakp-jnb8EBe5YLgpP5735ier8RQEBgqzylYdeK5918d86ZmbMFwT/exec';
+
+  let rsvpSelection = null;
+
+  function showSection(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+    if (id === 'rsvp') loadRsvp();
+    if (id === 'chat-all') loadChat('all');
+    if (id === 'chat-kanji') loadChat('kanji');
+  }
+
+  function selectRsvp(type) {
+    rsvpSelection = type;
+    document.getElementById('btn-attend').classList.toggle('selected', type === 'attend');
+    document.getElementById('btn-absent').classList.toggle('selected', type === 'absent');
+  }
+
+  // ---- RSVP ----
+  async function loadRsvp() {
+    if (GAS_URL === 'GAS_URL_HERE') { renderRsvpOffline([]); return; }
+    try {
+      const res = await fetch(GAS_URL + '?sheet=rsvp');
+      const json = await res.json();
+      if (json.status === 'ok') renderRsvpOffline(json.data);
+    } catch(e) { renderRsvpOffline([]); }
+  }
+
+  function renderRsvpOffline(data) {
+    const attend = data.filter(r => r.status === 'attend').length;
+    const absent = data.filter(r => r.status === 'absent').length;
+    document.getElementById('attend-count').textContent = attend;
+    document.getElementById('absent-count').textContent = absent;
+    document.getElementById('total-count').textContent = data.length;
+    const list = document.getElementById('attendee-list');
+    list.innerHTML = '<div style="font-size:12px;color:var(--text-light);margin-bottom:12px;">回答者一覧（' + data.length + '名）</div>';
+    data.slice().reverse().forEach(r => {
+      const el = document.createElement('div');
+      el.className = 'attendee-item';
+      const sub = [r.oldname ? '旧姓：' + r.oldname : '', r.msg].filter(Boolean).join(' / ');
+      el.innerHTML = `
+        <div>
+          <div class="attendee-name">${r.name}</div>
+          ${sub ? `<div class="attendee-sub">${sub}</div>` : ''}
+        </div>
+        <span class="badge ${r.status === 'attend' ? 'badge-attend' : 'badge-absent'}">${r.status === 'attend' ? '参加' : '不参加'}</span>
+      `;
+      list.appendChild(el);
+    });
+  }
+
+  async function submitRsvp() {
+    const name = document.getElementById('rsvp-name').value.trim();
+    const oldname = document.getElementById('rsvp-oldname').value.trim();
+    const tel = document.getElementById('rsvp-tel').value.trim();
+    const lineid = document.getElementById('rsvp-lineid').value.trim();
+    const msg = document.getElementById('rsvp-msg').value.trim();
+    if (!name) { showToast('名前を入力してください'); return; }
+    if (!rsvpSelection) { showToast('参加 / 不参加を選んでください'); return; }
+
+    const btn = document.getElementById('rsvp-submit');
+    btn.disabled = true;
+    btn.textContent = '送信中...';
+
+    const payload = { type: 'rsvp', name, oldname, tel, lineid, msg, status: rsvpSelection };
+
+    if (GAS_URL !== 'GAS_URL_HERE') {
+      try {
+        await fetch(GAS_URL, {
+          method: 'POST',
+          body: JSON.stringify(payload)
+        });
+      } catch(e) {}
+    }
+
+    btn.disabled = false;
+    btn.textContent = '回答を送信する';
+    document.getElementById('rsvp-name').value = '';
+    document.getElementById('rsvp-oldname').value = '';
+    document.getElementById('rsvp-tel').value = '';
+    document.getElementById('rsvp-lineid').value = '';
+    document.getElementById('rsvp-msg').value = '';
+    rsvpSelection = null;
+    document.getElementById('btn-attend').classList.remove('selected');
+    document.getElementById('btn-absent').classList.remove('selected');
+    showToast('回答を送信しました！ありがとうございます 🎉');
+    setTimeout(loadRsvp, 1000);
+  }
+
+  // ---- CHAT ----
+  async function loadChat(type) {
+    const sheet = type === 'all' ? 'chat_all' : 'chat_kanji';
+    const container = document.getElementById('chat-' + type + '-messages');
+    if (GAS_URL === 'GAS_URL_HERE') {
+      container.innerHTML = type === 'all'
+        ? '<div class="chat-msg"><div class="chat-msg-header"><span class="chat-msg-name" style="color:#B8860B;">👑 ガチョン（幹事）</span><span class="chat-msg-time">5/22 10:00</span></div><div class="chat-msg-body" style="background:rgba(184,134,11,0.08);padding:8px 12px;border-radius:0 8px 8px 8px;display:inline-block;">みんな久しぶり！同窓会やります！ぜひ来てね〜！</div></div>'
+        : '<div class="chat-msg"><div class="chat-msg-header"><span class="chat-msg-name" style="color:#B8860B;">👑 ガチョン（幹事）</span><span class="chat-msg-time">5/22 10:00</span></div><div class="chat-msg-body" style="background:rgba(184,134,11,0.08);padding:8px 12px;border-radius:0 8px 8px 8px;display:inline-block;">何か質問があればここに書いてください！</div></div>';
+      return;
+    }
+    try {
+      const res = await fetch(GAS_URL + '?sheet=' + sheet);
+      const json = await res.json();
+      if (json.status === 'ok') {
+        container.innerHTML = '';
+        if (json.data.length === 0) {
+          container.innerHTML = '<div style="font-size:12px;color:var(--text-light);">まだメッセージはありません</div>';
+          return;
+        }
+        json.data.forEach(m => {
+          const el = document.createElement('div');
+          el.className = 'chat-msg';
+          el.innerHTML = `
+            <div class="chat-msg-header">
+              <span class="chat-msg-name">${m.name}</span>
+              <span class="chat-msg-time">${m.datetime}</span>
+            </div>
+            <div class="chat-msg-body">${m.msg}</div>
+          `;
+          container.appendChild(el);
+        });
+        container.scrollTop = container.scrollHeight;
+      }
+    } catch(e) {}
+  }
+
+  async function sendChat(type) {
+    const nameEl = document.getElementById('chat-' + type + '-name');
+    const inputEl = document.getElementById('chat-' + type + '-input');
+    const name = nameEl.value.trim();
+    const msg = inputEl.value.trim();
+    if (!name || !msg) { showToast('名前とメッセージを入力してください'); return; }
+
+    const sheet = type === 'all' ? 'chat_all' : 'chat_kanji';
+    inputEl.value = '';
+
+    // 即時表示
+    const now = new Date();
+    const timeStr = (now.getMonth()+1) + '/' + now.getDate() + ' ' + now.getHours() + ':' + String(now.getMinutes()).padStart(2,'0');
+    const container = document.getElementById('chat-' + type + '-messages');
+    const el = document.createElement('div');
+    el.className = 'chat-msg';
+    el.innerHTML = `
+      <div class="chat-msg-header">
+        <span class="chat-msg-name">${name}</span>
+        <span class="chat-msg-time">${timeStr}</span>
+      </div>
+      <div class="chat-msg-body">${msg}</div>
+    `;
+    container.appendChild(el);
+    container.scrollTop = container.scrollHeight;
+
+    if (GAS_URL !== 'GAS_URL_HERE') {
+      try {
+        await fetch(GAS_URL, {
+          method: 'POST',
+          body: JSON.stringify({ type: 'chat_' + type, name, msg })
+        });
+      } catch(e) {}
+    }
+  }
+
+  function addNotice() {
+    const title = document.getElementById('notice-title-input').value.trim();
+    const body = document.getElementById('notice-body-input').value.trim();
+    if (!title || !body) { showToast('タイトルと内容を入力してください'); return; }
+    const now = new Date();
+    const dateStr = now.getFullYear() + '年' + (now.getMonth()+1) + '月' + now.getDate() + '日';
+    const item = document.createElement('div');
+    item.className = 'notice-item';
+    item.innerHTML = `
+      <div class="notice-date">${dateStr}</div>
+      <div class="notice-title">📌 ${title}</div>
+      <div class="notice-body">${body}</div>
+    `;
+    document.getElementById('notice-list').prepend(item);
+    document.getElementById('notice-title-input').value = '';
+    document.getElementById('notice-body-input').value = '';
+    showToast('お知らせを投稿しました');
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  // 初期ロード
+  loadRsvp();
+  loadChat('all');
+</script>
+</body>
+</html>
